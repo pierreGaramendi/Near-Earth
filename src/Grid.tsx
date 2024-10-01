@@ -3,6 +3,20 @@ import { ColDef, ValueFormatterFunc, ValueFormatterParams } from "ag-grid-commun
 import data from "./near-earth-asteroids.json";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
+import { useCallback, useRef } from "react";
+
+export interface INearEarthAsteroids {
+  designation: string;
+  discovery_date: string;
+  h_mag?: string;
+  moid_au: string;
+  q_au_1: string;
+  q_au_2?: string;
+  period_yr?: string;
+  i_deg: string;
+  pha: string;
+  orbit_class: string;
+}
 
 let discoveryDateFilterParams = {
   comparator: (filterDate: Date, cellValue: string) => {
@@ -58,10 +72,25 @@ const columnDefs: ColDef[] = [
 ];
 
 const NeoGrid = (): JSX.Element => {
+  
+  const gridRef = useRef<AgGridReact<INearEarthAsteroids>>(null);
+
+  const clearSort = useCallback(() => {
+    gridRef.current!.api.setFilterModel(null);
+    gridRef.current!.columnApi.applyColumnState({
+      defaultState: { sort: null },
+    });
+  }, []);
+
   return (
     <div className="ag-theme-alpine" style={{ height: 900, width: 1920 }}>
-      <h1>Near-Earth Object Overview</h1>
-      <AgGridReact rowData={data} columnDefs={columnDefs} rowGroupPanelShow={"always"} rowSelection={"multiple"} />
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <h1>Near-Earth Object Overview</h1>
+        <button style={{ marginLeft: "15px" }} onClick={clearSort}>
+          Clear Filters and Sorters
+        </button>
+      </div>
+      <AgGridReact ref={gridRef} rowData={data} columnDefs={columnDefs} rowGroupPanelShow={"always"} rowSelection="multiple" />
     </div>
   );
 };
