@@ -1,12 +1,38 @@
 import { AgGridReact } from "ag-grid-react";
-import { ColDef } from "ag-grid-community";
+import { ColDef, ValueFormatterParams } from "ag-grid-community";
 import data from "./near-earth-asteroids.json";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
+let filterParams = {
+  comparator: (filterDate: Date, cellValue: string) => {
+    const cellDate = new Date(cellValue);
+    if (cellDate < filterDate) return -1;
+    if (cellDate > filterDate) return 1;
+    return 0;
+  },
+};
+
+let valueFormatter = (params: ValueFormatterParams) => {
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  };
+  const date = new Date(params.value);
+  return date.toLocaleDateString("en-US", options);
+};
+
 const columnDefs: ColDef[] = [
   { field: "designation", headerName: "Designation", sortable: true, filter: true },
-  { field: "discovery_date", headerName: "Discovery Date", sortable: true, filter: true },
+  {
+    field: "discovery_date",
+    headerName: "Discovery Date",
+    sortable: true,
+    filter: "agDateColumnFilter",
+    filterParams: filterParams,
+    valueFormatter: valueFormatter,
+  },
   { field: "h_mag", headerName: "H (mag)", sortable: true, filter: "agNumberColumnFilter" },
   { field: "moid_au", headerName: "MOID (au)", sortable: true, filter: "agNumberColumnFilter" },
   { field: "q_au_1", headerName: "q (au)", sortable: true, filter: "agNumberColumnFilter" },
