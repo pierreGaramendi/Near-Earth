@@ -1,6 +1,22 @@
-# Getting Started with Create React App
+# Code Challenge
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Considerations
+
+The latest version of node LTS 20.17.0 was used.
+
+The separation of responsibilities was considered to divide and separate the code into different files and grouped by folders.
+
+The code was commented to facilitate the understanding of the function of each element of the code.
+
+A few styles were added to improve the layout and appearance of the application.
+
+The name of the components and other elements were also considered to facilitate the understanding of the functionality of each of them.
+
+## Uncompleted tasks
+
+Task number 5 could not be completed because the multi-cell selection functionality is part of the enterprise version of the Ag Grid library.
 
 ## Available Scripts
 
@@ -64,3 +80,4 @@ Within this repo is a demo UI that our team needs to make some changes to before
 7. Lastly, this grid is going to go to production soon, and other developers will begin doing work on this project. While creating this demo, considerations were not made to keep the code clean and organized. Please organize this codebase so that it is easier to find and make changes to components, as well as finding any interfaces, types, or helper functions.
 
 After completing this project, please push any changes you made to a publicly accessible GitLab or GitHub repository and include that link in an email to your contact at PCI. Thank you!
+
